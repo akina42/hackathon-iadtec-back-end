@@ -2,8 +2,7 @@ package com.iadtec.hackathon.DTO;
 
 import java.io.Serializable;
 
-public class RegisterOneDTO implements Serializable {
-
+public class RegisterOneResponseDTO implements Serializable {
     private Long id;
 
     private String name;

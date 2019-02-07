@@ -1,11 +1,21 @@
 package com.iadtec.hackathon.Repository;
 
 import com.iadtec.hackathon.Entity.RegisterOne;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Optional;
 
-public interface RegisterOneRepository extends CrudRepository<RegisterOne, Long> {
+public interface RegisterOneRepository extends PagingAndSortingRepository<RegisterOne, Long> {
+
+    @Override
+    Iterable<RegisterOne> findAll(Sort sort);
+
+    @Override
+    Page<RegisterOne> findAll(Pageable pageable);
+
     @Override
     <S extends RegisterOne> S save(S s);
 

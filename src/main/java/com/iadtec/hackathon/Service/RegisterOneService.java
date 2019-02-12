@@ -47,15 +47,15 @@ public class RegisterOneService {
         return registerOneResponseDTO;
     }
 
-//    public List<RegisterOneResponseDTO> getAllRegisterOne() {
-//        Iterable<RegisterOne> allRegisterOne = registerOneRepository.findAll();
-//        List<RegisterOneResponseDTO> allRegisterOneResponseDTO = new ArrayList<>();
-//        allRegisterOne.forEach(registerOne -> {
-//            RegisterOneResponseDTO registerOneResponseDTO = modelMapper.map(registerOne, RegisterOneResponseDTO.class);
-//            allRegisterOneResponseDTO.add(registerOneResponseDTO);
-//        });
-//        return allRegisterOneResponseDTO;
-//    }
+    public List<RegisterOneResponseDTO> getAllRegisterOneExport() {
+        Iterable<RegisterOne> allRegisterOne = registerOneRepository.findAll();
+        List<RegisterOneResponseDTO> allRegisterOneResponseDTO = new ArrayList<>();
+        allRegisterOne.forEach(registerOne -> {
+            RegisterOneResponseDTO registerOneResponseDTO = modelMapper.map(registerOne, RegisterOneResponseDTO.class);
+            allRegisterOneResponseDTO.add(registerOneResponseDTO);
+        });
+        return allRegisterOneResponseDTO;
+    }
 
     public List<RegisterOneResponseDTO> getAllRegisterOne(PathParamsPageable pathParamsPageable) {
         PageRequest pageRequest = this.createPageRequest(pathParamsPageable);

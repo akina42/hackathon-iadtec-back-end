@@ -24,7 +24,7 @@ public class RegisterOneController {
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<RegisterOneResponseDTO> getRegisterOne(@PathVariable("id") Long id){
+    public ResponseEntity<RegisterOneResponseDTO> getRegisterOne(@PathVariable("id") Long id){
        ResponseEntity<RegisterOneResponseDTO> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
        Optional<RegisterOneResponseDTO> registerOneResponse = registerOneService.getRegisterOne(id);
        if(registerOneResponse.isPresent()){
@@ -34,7 +34,7 @@ public class RegisterOneController {
     }
 
     @GetMapping()
-    private ResponseEntity<List<RegisterOneResponseDTO>> getAllRegisterOne(
+    public ResponseEntity<List<RegisterOneResponseDTO>> getAllRegisterOne(
             @PathParam("page") Integer page,
             @PathParam("size") Integer size,
             @PathParam("ascendent") Boolean ascendent,
@@ -50,7 +50,7 @@ public class RegisterOneController {
     }
 
     @PostMapping()
-    private ResponseEntity<RegisterOneResponseDTO> createNewRegisterOne(
+    public ResponseEntity<RegisterOneResponseDTO> createNewRegisterOne(
             @RequestBody RegisterOneRequestDTO registerOneRequestDTO){
         RegisterOneResponseDTO registerOneResponseDTO = registerOneService.createRegisterOne(registerOneRequestDTO);
         return new ResponseEntity<>(registerOneResponseDTO, HttpStatus.OK);

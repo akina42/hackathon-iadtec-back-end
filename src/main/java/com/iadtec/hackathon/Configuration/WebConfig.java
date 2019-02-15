@@ -1,11 +1,14 @@
-package com.iadtec.hackathon.ExportFiles;
+package com.iadtec.hackathon.Configuration;
 
+import com.iadtec.hackathon.ExportFiles.ExcelViewResolver;
+import com.iadtec.hackathon.ExportFiles.PdfViewResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
@@ -13,9 +16,14 @@ import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import java.util.ArrayList;
 import java.util.List;
 
-@EnableWebMvc
 @Configuration
+@EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**");
+    }
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {

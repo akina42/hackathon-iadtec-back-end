@@ -11,8 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,13 +38,6 @@ public class RegisterOneService {
             return Optional.of(registerOneResponseDTO);
         }
         return Optional.empty();
-    }
-
-    public RegisterOneResponseDTO createRegisterOne(RegisterOneRequestDTO registerOneRequestDTO){
-        RegisterOne newRegisterOne = modelMapper.map(registerOneRequestDTO, RegisterOne.class);
-        RegisterOne registerOneSaved = registerOneRepository.save(newRegisterOne);
-        RegisterOneResponseDTO registerOneResponseDTO = modelMapper.map(registerOneSaved, RegisterOneResponseDTO.class);
-        return registerOneResponseDTO;
     }
 
     public List<RegisterOneResponseDTO> getAllRegisterOneExport() {
@@ -92,6 +85,43 @@ public class RegisterOneService {
         return allRegisterOneResponseDTO;
     }
 
+    @Transactional
+    public RegisterOneResponseDTO createRegisterOne(RegisterOneRequestDTO registerOneRequestDTO){
+        RegisterOne newRegisterOne = modelMapper.map(registerOneRequestDTO, RegisterOne.class);
+        RegisterOne registerOneSaved = registerOneRepository.save(newRegisterOne);
+        RegisterOneResponseDTO registerOneResponseDTO = modelMapper.map(registerOneSaved, RegisterOneResponseDTO.class);
+        return registerOneResponseDTO;
+    }
 
+    @Transactional
+    public Optional<RegisterOneResponseDTO> updateRegisterOne(Long id, RegisterOneRequestDTO registerOneRequestDTO){
+        Optional<RegisterOne> registerOne = registerOneRepository.findById(id);
+        if(registerOne.isPresent()){
+            RegisterOne registerOneUpdated = this.updateAttributesRegisterOne(registerOne.get(), registerOneRequestDTO);
+            RegisterOne registerOneSaved = registerOneRepository.save(registerOneUpdated);
+            RegisterOneResponseDTO registerOneResponseDTO = modelMapper.map(registerOneSaved,
+                    RegisterOneResponseDTO.class);
+            return Optional.of(registerOneResponseDTO);
+        }
+        return Optional.empty();
+    }
+
+    private RegisterOne updateAttributesRegisterOne(RegisterOne registerOne,
+                                                    RegisterOneRequestDTO registerOneRequestDTO){
+        registerOne.setName(registerOneRequestDTO.getName());
+        registerOne.setValue(registerOneRequestDTO.getValue());
+        return registerOne;
+    }
+
+    @Transactional
+    public Boolean deleteRegisterOne(Long id){
+        Boolean successDelete = false;
+        Optional<RegisterOne> registerOne = registerOneRepository.findById(id);
+        if(registerOne.isPresent()){
+            registerOneRepository.delete(registerOne.get());
+            successDelete = true;
+        }
+        return successDelete;
+    }
 
 }

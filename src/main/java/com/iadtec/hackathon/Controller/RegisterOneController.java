@@ -55,4 +55,26 @@ public class RegisterOneController {
         RegisterOneResponseDTO registerOneResponseDTO = registerOneService.createRegisterOne(registerOneRequestDTO);
         return new ResponseEntity<>(registerOneResponseDTO, HttpStatus.OK);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RegisterOneResponseDTO> updateRegisterOne(
+            @PathVariable("id") Long id, @RequestBody RegisterOneRequestDTO registerOneRequestDTO){
+        ResponseEntity<RegisterOneResponseDTO> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Optional<RegisterOneResponseDTO> registerOneResponse = registerOneService.updateRegisterOne(id,
+                registerOneRequestDTO);
+        if(registerOneResponse.isPresent()){
+            response = new ResponseEntity<>(registerOneResponse.get(), HttpStatus.OK);
+        }
+        return response;
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<RegisterOneResponseDTO> deleteRegisterOne(@PathVariable("id") Long id){
+        ResponseEntity<RegisterOneResponseDTO> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Boolean successDelete = registerOneService.deleteRegisterOne(id);
+        if(successDelete){
+            response = new ResponseEntity<>(HttpStatus.OK);
+        }
+        return response;
+    }
 }

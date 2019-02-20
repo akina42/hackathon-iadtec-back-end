@@ -3,6 +3,7 @@ package com.iadtec.hackathon.Service;
 import com.iadtec.hackathon.DTO.RegisterOneRequestDTO;
 import com.iadtec.hackathon.DTO.RegisterOneResponseDTO;
 import com.iadtec.hackathon.Entity.RegisterOne;
+import com.iadtec.hackathon.ExceptionHandling.ResourceNotFoundException;
 import com.iadtec.hackathon.Repository.RegisterOneRepository;
 import com.iadtec.hackathon.Utils.PathParamsPageable;
 import org.modelmapper.ModelMapper;
@@ -30,14 +31,14 @@ public class RegisterOneService {
     public RegisterOneService() {
     }
 
-    public Optional<RegisterOneResponseDTO> getRegisterOne(Long id){
-        Optional<RegisterOne> registerOne = registerOneRepository.findById(id);
-        if(registerOne.isPresent()){
-            RegisterOneResponseDTO registerOneResponseDTO = modelMapper.map(registerOne.get(),
-                    RegisterOneResponseDTO.class);
-            return Optional.of(registerOneResponseDTO);
-        }
-        return Optional.empty();
+    public Optional<RegisterOneResponseDTO> getRegisterOne(Long id) throws ResourceNotFoundException{
+        Optional<RegisterOne> registerOneOptional = registerOneRepository.findById(id);
+        registerOneOptional.orElseThrow(() -> {
+            return new ResourceNotFoundException();
+        });
+        RegisterOneResponseDTO registerOneResponseDTO = modelMapper.map(registerOneOptional.get(),
+                RegisterOneResponseDTO.class);
+        return Optional.of(registerOneResponseDTO);
     }
 
     public List<RegisterOneResponseDTO> getAllRegisterOneExport() {

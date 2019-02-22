@@ -1,7 +1,6 @@
 package com.iadtec.hackathon.ExportFiles;
 
-import com.iadtec.hackathon.DTO.RegisterOneResponseDTO;
-import com.iadtec.hackathon.Entity.RegisterOne;
+import com.iadtec.hackathon.DTO.ClienteResponseDTO;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Component;
@@ -22,7 +21,7 @@ public class ExcelView extends AbstractXlsxView {
         httpServletResponse.setHeader("Content-Disposition", "attachment; filename=\"report.xlsx\"");
 
         @SuppressWarnings("unchecked")
-        List<RegisterOneResponseDTO> allRegisterOneResponseDTO = (List<RegisterOneResponseDTO>) model.get("allRegisterOne");
+        List<ClienteResponseDTO> allRegisterOneResponseDTO = (List<ClienteResponseDTO>) model.get("allRegisterOne");
 
         Sheet sheet = workbook.createSheet("RegisterOne Detail");
         sheet.setDefaultColumnWidth(30);
@@ -46,11 +45,11 @@ public class ExcelView extends AbstractXlsxView {
 
         int rowCount = 1;
 
-        for(RegisterOneResponseDTO registerOneResponseDTO : allRegisterOneResponseDTO){
+        for(ClienteResponseDTO registerOneResponseDTO : allRegisterOneResponseDTO){
             Row userRow =  sheet.createRow(rowCount++);
             userRow.createCell(0).setCellValue(registerOneResponseDTO.getId());
-            userRow.createCell(1).setCellValue(registerOneResponseDTO.getName());
-            userRow.createCell(2).setCellValue(registerOneResponseDTO.getValue());
+            userRow.createCell(1).setCellValue(registerOneResponseDTO.getNome());
+            userRow.createCell(2).setCellValue(registerOneResponseDTO.getCpf());
         }
     }
 }

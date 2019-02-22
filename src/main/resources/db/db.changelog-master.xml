@@ -4,7 +4,8 @@
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <changeSet id="init" author="Akina">
-        <sqlFile encoding="utf8" path="db/changelog/1_CREATE_TABLE_REGISTER_ONE"/>
+        <sqlFile encoding="utf8" path="db/changelog/1_CREATE_TABLES.sql"/>
+        <sqlFile encoding="utf8" path="db/changelog/2_POPULA_INICIAL.sql"/>
     </changeSet>
 
 </databaseChangeLog>

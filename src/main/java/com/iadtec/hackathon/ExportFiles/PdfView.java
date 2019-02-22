@@ -1,6 +1,6 @@
 package com.iadtec.hackathon.ExportFiles;
 
-import com.iadtec.hackathon.DTO.RegisterOneResponseDTO;
+import com.iadtec.hackathon.DTO.ClienteResponseDTO;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -21,7 +21,7 @@ public class PdfView extends AbstractPdfView {
         response.setHeader("Content-Disposition", "attachment; filename=\"my-pdf-file.pdf\"");
 
         @SuppressWarnings("unchecked")
-        List<RegisterOneResponseDTO> allRegisterOneResponseDTO = (List<RegisterOneResponseDTO>) model.get("allRegisterOne");
+        List<ClienteResponseDTO> allRegisterOneResponseDTO = (List<ClienteResponseDTO>) model.get("allRegisterOne");
 
         document.add(new Paragraph("Generated Users " + LocalDate.now()));
 
@@ -45,13 +45,13 @@ public class PdfView extends AbstractPdfView {
         cell.setPhrase(new Phrase("Nome", font));
         table.addCell(cell);
 
-        cell.setPhrase(new Phrase("Valor", font));
+        cell.setPhrase(new Phrase("CPF", font));
         table.addCell(cell);
 
-        allRegisterOneResponseDTO.stream().forEach(registerOneResponseDTO -> {
+        allRegisterOneResponseDTO.forEach(registerOneResponseDTO -> {
             table.addCell(registerOneResponseDTO.getId().toString());
-            table.addCell(registerOneResponseDTO.getName());
-            table.addCell(registerOneResponseDTO.getValue().toString());
+            table.addCell(registerOneResponseDTO.getNome() );
+            table.addCell(registerOneResponseDTO.getCpf() );
         });
 
         document.add(table);
